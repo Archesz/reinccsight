@@ -1,0 +1,76 @@
+.view-container{
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    overflow-x: scroll;
+
+    .tables-area{
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 30px;
+    }
+
+    .view-row{
+        display: flex;
+        flex-direction: row;
+    }
+
+    .boxplot-area{
+        display: flex;
+        flex-direction: column;
+        
+        span{
+            margin-bottom: 20px;
+            font-weight: bolder;
+            font-size: 21px;
+        }
+
+        .boxplot-row{
+            display: flex;
+            flex-direction: row;
+        }
+    }
+
+    .scatter-area{
+        .options-row{
+            margin-left: 70px;
+
+            .select-group{
+                flex-direction: row;
+
+                select{
+                    margin-left: 10px;
+                    margin-top: -4px;
+                }
+            }
+        }
+    }
+}
+
+.options-row{
+    display: flex;
+    flex-direction: row;
+
+    .select-group{
+        display: flex;
+        flex-direction: column;
+        margin-left: 10px;
+        margin-right: 20px;
+        label{
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+    
+        select{
+            height: 26px;
+            box-sizing: border-box;
+            padding-right: 30px;
+            border-radius: 4px;
+            border: 1px solid #BBBBBB;
+        }
+    }
+}
