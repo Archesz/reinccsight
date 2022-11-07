@@ -124,4 +124,16 @@
             }
         }
     }
+    
+    .gear-icon{
+        color: white;
+        font-size: 32px;
+        margin-top: 40px;
+        cursor: pointer;
+
+        &:hover{
+            box-shadow: 4px 4px 6px rgba(255, 255, 255, 0.45);
+            border-radius: 50%;
+        }
+    }
 }
