@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Boxplot from '../../graphs/Boxplot/Boxplot'
 import Scatter from '../../graphs/Scatter/Scatter'
 import Table from '../../graphs/Table/Table'
@@ -7,7 +7,6 @@ import Histogram from '../../graphs/Histogram/Histogram'
 
 import './View.scss'
 import Violin from '../../graphs/Violin/Violin'
-
 
 let parcellation = {"Watershed": {"Witelson": [0.74236, 0.707348, 0.726156, 0.711431, 0.756921], "Hofer": [0.00001, 0.00001, 0.00001, 0.00001, 0.00001],
                                   "Chao": [0.00002,0.00002, 0.00002, 0.00002, 0.00002], "Freesurfer": [0.00003, 0.00003, 0.00003, 0.00003, 0.00003]}, 
@@ -33,24 +32,25 @@ function getErrorSubject(data){
 
 function getSegmentation(data){
     
-    let segmWatershed = [0, 0, 0, 0]
-    let segmROQS = [0, 0, 0, 0]
+    let segmWatershed = {"FA": 0, "RD": 0, "AD": 0, "MD": 0}
+    let segmROQS = {"FA": 0, "RD": 0, "AD": 0, "MD": 0}
 
-    // let segmWatershed = [0.739772, 0.000383, 0.001655, 0.000807]
-    // let segmROQS = [0.632888, 0.000586, 0.001704, 0.000959]
+    let keys = Object.keys(segmWatershed)
 
     data.map((subject) => {
-        for(let i = 0; i != 4; i++){
-            segmWatershed[i] += subject["Segmentation"]["Watershed"][i]
-            segmROQS[i] += subject["Segmentation"]["ROQS"][i]
-        }
+        for(let i = 0; i != keys.length; i++){
+            segmWatershed[keys[i]] += subject["Segmentation"]["Watershed"][keys[i]]
+            segmROQS[keys[i]] += subject["Segmentation"]["ROQS"][keys[i]]
+        }  
     })
 
-    for(let i = 0; i != 4; i++){
-        segmWatershed[i] = Number(segmWatershed[i] / data.length).toFixed(6)
-        segmROQS[i] = Number(segmROQS[i] / data.length).toFixed(6)
-    }
-
+    for(let i = 0; i != keys.length; i++){
+        segmWatershed[keys[i]] = Number(segmWatershed[keys[i]] / data.length).toFixed(6)
+        segmROQS[keys[i]] = Number(segmROQS[keys[i]] / data.length).toFixed(6)
+    }  
+    segmWatershed = [segmWatershed["FA"], segmWatershed["RD"], segmWatershed["AD"], segmWatershed["MD"]]
+    segmROQS = [segmROQS["FA"], segmROQS["RD"], segmROQS["AD"], segmROQS["MD"]
+]
     let segmentation = {"Watershed": segmWatershed, "ROQS": segmROQS}
 
     return segmentation
@@ -58,6 +58,19 @@ function getSegmentation(data){
 
 function View(props) {
     
+    let [scalarX, setScalarX] = useState("FA")
+    let [scalarY, setScalarY] = useState("FA")
+
+    function changeScalarX(axis){
+        let value = document.querySelector(`#scalarX`).value
+        setScalarX(value)
+    }
+
+    function changeScalarY(axis){
+        let value = document.querySelector(`#scalarY`).value
+        setScalarY(value)
+    }
+
     let [errorRoqs, errorWatershed] = getErrorSubject(props.data)
     let segmentation = getSegmentation(props.data)
 
@@ -88,19 +101,19 @@ function View(props) {
 
                     <span>Segmentation Boxplot</span>
                     <div className='boxplot-row'>
-                        <Boxplot title={"FA"} data={props.data} size="medium"/>
-                        <Boxplot title={"MD"} data={props.data} size="medium"/>
-                        <Boxplot title={"RD"} data={props.data} size="medium"/>
-                        <Boxplot title={"AD"} data={props.data} size="medium"/>
+                        <Boxplot title={"FA"} type="Segmentation" data={props.data} size="medium"/>
+                        <Boxplot title={"MD"} type="Segmentation" data={props.data} size="medium"/>
+                        <Boxplot title={"RD"} type="Segmentation" data={props.data} size="medium"/>
+                        <Boxplot title={"AD"} type="Segmentation" data={props.data} size="medium"/>
                     </div>
 
                     <span>Parcellation Boxplot</span>
                     <div className='boxplot-row'>
-                        <Boxplot title={"P1"} size="small"/>
-                        <Boxplot title={"P2"} size="small"/>
-                        <Boxplot title={"P3"} size="small"/>
-                        <Boxplot title={"P4"} size="small"/>
-                        <Boxplot title={"P5"} size="small"/>
+                        <Boxplot title={"P1"} type="Parcellation" size="small"/>
+                        <Boxplot title={"P2"} type="Parcellation" size="small"/>
+                        <Boxplot title={"P3"} type="Parcellation" size="small"/>
+                        <Boxplot title={"P4"} type="Parcellation" size="small"/>
+                        <Boxplot title={"P5"} type="Parcellation" size="small"/>
 
                     </div>
 
@@ -131,28 +144,28 @@ function View(props) {
                 </div>
 
                 <div className='scatter-area'>
-                    <Histogram />
-                    <Scatter scalarX={"FA"} scalarY={"MD"}/>
+                    <Histogram data={props.data} scalarX={scalarX}/>
+                    <Scatter data={props.data} scalarX={scalarX} scalarY={scalarY}/>
 
                     <div className='options-row'>
 
                         <div className='select-group'>
                             <label>Scalar Y: </label>
-                            <select>
-                                <option>FA</option>
-                                <option>RD</option>
-                                <option>AD</option>
-                                <option>MD</option>
+                            <select id='scalarY' onChange={changeScalarY}>
+                                <option value="FA">FA</option>
+                                <option value="MD">RD</option>
+                                <option value="RD">AD</option>
+                                <option value="AD">MD</option>
                             </select>
                         </div>
 
                         <div className='select-group'>
                             <label>Scalar X: </label>
-                            <select>
-                                <option>FA</option>
-                                <option>RD</option>
-                                <option>AD</option>
-                                <option>MD</option>
+                            <select id='scalarX' onChange={changeScalarX}>
+                                <option value="FA">FA</option>
+                                <option value="MD">RD</option>
+                                <option value="RD">AD</option>
+                                <option value="AD">MD</option>
                             </select>
                         </div>
 

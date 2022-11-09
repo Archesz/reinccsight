@@ -3,13 +3,6 @@ import Plot from 'react-plotly.js'
 
 import './Boxplot.scss'
 
-var y0 = [];
-var y1 = [];
-for (var i = 0; i < 50; i ++) {
-	y0[i] = Math.random();
-	y1[i] = Math.random() + 1;
-}
-
 function getSize(size){
     let sizes = []
     if(size == "small"){
@@ -20,20 +13,37 @@ function getSize(size){
     return sizes
 }
 
+function getData(data, name, scalar){
+    let lista = []
+
+    data.map((subject) => {
+        lista.push(subject["Segmentation"][name][scalar])
+    })
+    
+    return lista
+}
+
 function Boxplot(props) {
 
-    
-    let y0 = [0.627737, 0.558148, 0.662261, 0.661749]
-    let y1 = [0.75123, 0.683594, 0.759836, 0.754661]
+    let y0 = []
+    let y1 = []
+
+    if(props.type == "Segmentation"){
+        y0 = getData(props.data, "ROQS", props.title)
+        y1 = getData(props.data, "Watershed", props.title)
+    } else{
+        y0 = [0.627737, 0.558148, 0.662261, 0.661749]
+        y1 = [0.75123, 0.683594, 0.759836, 0.754661]    
+    }
 
     let data = [{
         y: y0,
         type: "box",
-        name: "Watershed"
+        name: "ROQS"
     }, {
         y: y1,
         type: "box",
-        name: "ROQS"
+        name: "Watershed"
         }
     ]
 
