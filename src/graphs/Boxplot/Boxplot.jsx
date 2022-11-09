@@ -22,6 +22,10 @@ function getSize(size){
 
 function Boxplot(props) {
 
+    
+    let y0 = [0.627737, 0.558148, 0.662261, 0.661749]
+    let y1 = [0.75123, 0.683594, 0.759836, 0.754661]
+
     let data = [{
         y: y0,
         type: "box",
@@ -30,8 +34,9 @@ function Boxplot(props) {
         y: y1,
         type: "box",
         name: "ROQS"
-    }
+        }
     ]
+
     let sizes = getSize(props.size)
 
     let layout = {title: props.title, height: sizes[0], width: sizes[1], margin: {l: 10, r: 10}, legend: {orientation: "h"}}
