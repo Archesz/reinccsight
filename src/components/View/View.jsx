@@ -8,21 +8,66 @@ import Histogram from '../../graphs/Histogram/Histogram'
 import './View.scss'
 import Violin from '../../graphs/Violin/Violin'
 
-let segmentation = {"Watershed": [0.739772, 0.000383, 0.001655, 0.000807], "ROQS": [0.632888, 0.000586, 0.001704, 0.000959]}
 
 let parcellation = {"Watershed": {"Witelson": [0.74236, 0.707348, 0.726156, 0.711431, 0.756921], "Hofer": [0.00001, 0.00001, 0.00001, 0.00001, 0.00001],
                                   "Chao": [0.00002,0.00002, 0.00002, 0.00002, 0.00002], "Freesurfer": [0.00003, 0.00003, 0.00003, 0.00003, 0.00003]}, 
                     "ROQS": {"Witelson": [0.641286, 0.585289, 0.593242, 0.584628, 0.672122], "Hofer": [0.00001, 0.00001, 0.00001, 0.00001, 0.00001],
                                   "Chao": [0.00002,0.00002, 0.00002, 0.00002, 0.00002], "Freesurfer": [0.00003, 0.00003, 0.00003, 0.00003, 0.00003]}}
 
+function getErrorSubject(data){
+
+    let roqs = []
+    let watershed = []
+
+    data.map((subject) => {
+        if(subject["Flag_watershed"] == 1){
+            watershed.push(subject["Name"])
+        }
+        if(subject["Flag_ROQS"] == 1){
+            roqs.push(subject["Name"])
+        }
+    })
+
+    return [roqs, watershed]
+}
+
+function getSegmentation(data){
+    
+    let segmWatershed = [0, 0, 0, 0]
+    let segmROQS = [0, 0, 0, 0]
+
+    // let segmWatershed = [0.739772, 0.000383, 0.001655, 0.000807]
+    // let segmROQS = [0.632888, 0.000586, 0.001704, 0.000959]
+
+    data.map((subject) => {
+        for(let i = 0; i != 4; i++){
+            segmWatershed[i] += subject["Segmentation"]["Watershed"][i]
+            segmROQS[i] += subject["Segmentation"]["ROQS"][i]
+        }
+    })
+
+    for(let i = 0; i != 4; i++){
+        segmWatershed[i] = Number(segmWatershed[i] / data.length).toFixed(6)
+        segmROQS[i] = Number(segmROQS[i] / data.length).toFixed(6)
+    }
+
+    let segmentation = {"Watershed": segmWatershed, "ROQS": segmROQS}
+
+    return segmentation
+}
+
 function View(props) {
+    
+    let [errorRoqs, errorWatershed] = getErrorSubject(props.data)
+    let segmentation = getSegmentation(props.data)
+
     return (
         <div className='view-container'>
 
             <div className='tables-area'>
 
-                <Painel subjects={{"ROQS": ["Subject_000256", "Subject_000139", "Subject_000758", "Subject_000986"],
-                               "Watershed": ["Subject_000001", "Subject_000002", "Subject_000003", "Subject_000004"]}}/>
+                <Painel subjects={{"ROQS": errorRoqs,
+                               "Watershed": errorWatershed}}/>
 
                 <Table 
                 headers={["Method", "FA", "RD", "AD", "MD"]} data={segmentation} title="Segmentation Data"
@@ -43,10 +88,10 @@ function View(props) {
 
                     <span>Segmentation Boxplot</span>
                     <div className='boxplot-row'>
-                        <Boxplot title={"FA"} size="medium"/>
-                        <Boxplot title={"MD"} size="medium"/>
-                        <Boxplot title={"RD"} size="medium"/>
-                        <Boxplot title={"AD"} size="medium"/>
+                        <Boxplot title={"FA"} data={props.data} size="medium"/>
+                        <Boxplot title={"MD"} data={props.data} size="medium"/>
+                        <Boxplot title={"RD"} data={props.data} size="medium"/>
+                        <Boxplot title={"AD"} data={props.data} size="medium"/>
                     </div>
 
                     <span>Parcellation Boxplot</span>

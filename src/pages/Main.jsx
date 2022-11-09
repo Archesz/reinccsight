@@ -8,7 +8,12 @@ import { createRoot } from 'react-dom/client';
 import '../styles/main.scss'
 import ConfigModal from '../components/ConfigModal/ConfigModal';
 
-const subjects = ['subject_0', 'subject_1', 'subject_2', 'subject_3', 'subject_4', 'subject_5', 'subject_6', 'subject_7', 'subject_8', 'subject_9', 'subject_10', 'subject_11', 'subject_12', 'subject_13', 'subject_14', 'subject_15', 'subject_16', 'subject_17', 'subject_18', 'subject_19', 'subject_20', 'subject_21', 'subject_22', 'subject_23', 'subject_24', 'subject_25', 'subject_26', 'subject_27', 'subject_28', 'subject_29', 'subject_30', 'subject_31', 'subject_32', 'subject_33', 'subject_34', 'subject_35', 'subject_36', 'subject_37', 'subject_38', 'subject_39', 'subject_40', 'subject_41', 'subject_42', 'subject_43', 'subject_44', 'subject_45', 'subject_46', 'subject_47', 'subject_48', 'subject_49']
+// const subjects = ['subject_0', 'subject_1', 'subject_2', 'subject_3', 'subject_4', 'subject_5', 'subject_6', 'subject_7', 'subject_8', 'subject_9', 'subject_10', 'subject_11', 'subject_12', 'subject_13', 'subject_14', 'subject_15', 'subject_16', 'subject_17', 'subject_18', 'subject_19', 'subject_20', 'subject_21', 'subject_22', 'subject_23', 'subject_24', 'subject_25', 'subject_26', 'subject_27', 'subject_28', 'subject_29', 'subject_30', 'subject_31', 'subject_32', 'subject_33', 'subject_34', 'subject_35', 'subject_36', 'subject_37', 'subject_38', 'subject_39', 'subject_40', 'subject_41', 'subject_42', 'subject_43', 'subject_44', 'subject_45', 'subject_46', 'subject_47', 'subject_48', 'subject_49']
+
+import data from '../data/Data.json'
+
+const subjects = data["Subjects"]
+
 
 function showConfigs(){
     const container = document.querySelector('#modalArea');
@@ -74,9 +79,9 @@ function Main() {
                     <div className='subjects'>
 
                         {subjects.map((subject, index) => {
-                            if(subject.includes(filter)){
+                            if(subject["Name"].includes(filter)){
                                 return(
-                                    <SubjectCard name={subject} key={index}/>
+                                    <SubjectCard name={subject["Name"]} key={index}/>
                                 )
                             }
                         })}
@@ -100,7 +105,7 @@ function Main() {
 
             </div>
 
-            <View />
+            <View data={subjects}/>
 
         </div>
     )
