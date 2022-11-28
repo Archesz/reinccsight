@@ -4,6 +4,7 @@ import Scatter from '../../graphs/Scatter/Scatter'
 import Table from '../../graphs/Table/Table'
 import Painel from '../Painel/Painel'
 import Histogram from '../../graphs/Histogram/Histogram'
+import {AiOutlineEye} from 'react-icons/ai'
 
 import './View.scss'
 import Violin from '../../graphs/Violin/Violin'
@@ -12,6 +13,13 @@ let parcellation = {"Watershed": {"Witelson": [0.74236, 0.707348, 0.726156, 0.71
                                   "Chao": [0.00002,0.00002, 0.00002, 0.00002, 0.00002], "Freesurfer": [0.00003, 0.00003, 0.00003, 0.00003, 0.00003]}, 
                     "ROQS": {"Witelson": [0.641286, 0.585289, 0.593242, 0.584628, 0.672122], "Hofer": [0.00001, 0.00001, 0.00001, 0.00001, 0.00001],
                                   "Chao": [0.00002,0.00002, 0.00002, 0.00002, 0.00002], "Freesurfer": [0.00003, 0.00003, 0.00003, 0.00003, 0.00003]}}
+
+function callPainel(){
+    let painel = document.querySelector("#painel-container")
+    let call = document.querySelector("#painel-call")
+    painel.style.display = "flex"
+    call.style.display = "None"
+}
 
 function getErrorSubject(data){
 
@@ -76,104 +84,116 @@ function View(props) {
 
     return (
         <div className='view-container'>
-
-            <div className='tables-area'>
-
+            
+            <div className='painel-field'>
                 <Painel subjects={{"ROQS": errorRoqs,
-                               "Watershed": errorWatershed}}/>
-
-                <Table 
-                headers={["Method", "FA", "RD", "AD", "MD"]} data={segmentation} title="Segmentation Data"
-                type="segmentation"
-                />
-
-                <Table 
-                headers={["Method", "P1", "P2", "P3", "P4", "P5"]} data={parcellation} title="Parcellation Data"
-                type="parcellation"
-                methods={Object.keys(parcellation["Watershed"])}
-                options={["Mode", "Parcellation Method", "Scalar"]}
-                />
-
+                                   "Watershed": errorWatershed}}/>
+            </div>
+            
+            <div className='painel-call' id='painel-call'>
+                <AiOutlineEye onClick={callPainel}/>
             </div>
 
-            <div className='view-row'>
-                <div className='boxplot-area'>
+            <div className='area-view'>
 
-                    <span>Segmentation Boxplot</span>
-                    <div className='boxplot-row'>
-                        <Boxplot title={"FA"} type="Segmentation" data={props.data} size="medium"/>
-                        <Boxplot title={"MD"} type="Segmentation" data={props.data} size="medium"/>
-                        <Boxplot title={"RD"} type="Segmentation" data={props.data} size="medium"/>
-                        <Boxplot title={"AD"} type="Segmentation" data={props.data} size="medium"/>
-                    </div>
 
-                    <span>Parcellation Boxplot</span>
-                    <div className='boxplot-row'>
-                        <Boxplot title={"P1"} type="Parcellation" size="small"/>
-                        <Boxplot title={"P2"} type="Parcellation" size="small"/>
-                        <Boxplot title={"P3"} type="Parcellation" size="small"/>
-                        <Boxplot title={"P4"} type="Parcellation" size="small"/>
-                        <Boxplot title={"P5"} type="Parcellation" size="small"/>
+                <div className='tables-area'>
 
-                    </div>
+                    <Table 
+                    headers={["Method", "FA", "RD", "AD", "MD"]} data={segmentation} title="Segmentation Data"
+                    type="segmentation"
+                    />
 
-                    <div className='options-row'>
+                    <Table 
+                    headers={["Method", "P1", "P2", "P3", "P4", "P5"]} data={parcellation} title="Parcellation Data"
+                    type="parcellation"
+                    methods={Object.keys(parcellation["Watershed"])}
+                    options={["Mode", "Parcellation Method", "Scalar"]}
+                    />
 
-                        <div className='select-group'>
-                            <label>Parcellation Method: </label>
-                            <select>
-                                <option>Witelson</option>
-                                <option>Hofer</option>
-                                <option>Chao</option>
-                                <option>Freesurfer</option>
-                            </select>
+                </div>
+
+                <div className='view-row'>
+                    <div className='boxplot-area'>
+
+                        <span>Segmentation Boxplot</span>
+                        <div className='boxplot-row'>
+                            <Boxplot title={"FA"} type="Segmentation" data={props.data} size="medium"/>
+                            <Boxplot title={"MD"} type="Segmentation" data={props.data} size="medium"/>
+                            <Boxplot title={"RD"} type="Segmentation" data={props.data} size="medium"/>
+                            <Boxplot title={"AD"} type="Segmentation" data={props.data} size="medium"/>
                         </div>
 
-                        <div className='select-group'>
-                            <label>Scalar: </label>
-                            <select>
-                                <option>FA</option>
-                                <option>RD</option>
-                                <option>AD</option>
-                                <option>MD</option>
-                            </select>
+                        <span>Parcellation Boxplot</span>
+                        <div className='boxplot-row'>
+                            <Boxplot title={"P1"} type="Parcellation" size="small"/>
+                            <Boxplot title={"P2"} type="Parcellation" size="small"/>
+                            <Boxplot title={"P3"} type="Parcellation" size="small"/>
+                            <Boxplot title={"P4"} type="Parcellation" size="small"/>
+                            <Boxplot title={"P5"} type="Parcellation" size="small"/>
+
+                        </div>
+
+                        <div className='options-row'>
+
+                            <div className='select-group'>
+                                <label>Parcellation Method: </label>
+                                <select>
+                                    <option>Witelson</option>
+                                    <option>Hofer</option>
+                                    <option>Chao</option>
+                                    <option>Freesurfer</option>
+                                </select>
+                            </div>
+
+                            <div className='select-group'>
+                                <label>Scalar: </label>
+                                <select>
+                                    <option>FA</option>
+                                    <option>RD</option>
+                                    <option>AD</option>
+                                    <option>MD</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div className='scatter-area'>
+                        <Histogram data={props.data} scalarX={scalarX}/>
+                        <Scatter data={props.data} scalarX={scalarX} scalarY={scalarY}/>
+
+                        <div className='options-row'>
+
+                            <div className='select-group'>
+                                <label>Scalar Y: </label>
+                                <select id='scalarY' onChange={changeScalarY}>
+                                    <option value="FA">FA</option>
+                                    <option value="MD">RD</option>
+                                    <option value="RD">AD</option>
+                                    <option value="AD">MD</option>
+                                </select>
+                            </div>
+
+                            <div className='select-group'>
+                                <label>Scalar X: </label>
+                                <select id='scalarX' onChange={changeScalarX}>
+                                    <option value="FA">FA</option>
+                                    <option value="MD">RD</option>
+                                    <option value="RD">AD</option>
+                                    <option value="AD">MD</option>
+                                </select>
+                            </div>
+
                         </div>
 
                     </div>
 
                 </div>
 
-                <div className='scatter-area'>
-                    <Histogram data={props.data} scalarX={scalarX}/>
-                    <Scatter data={props.data} scalarX={scalarX} scalarY={scalarY}/>
-
-                    <div className='options-row'>
-
-                        <div className='select-group'>
-                            <label>Scalar Y: </label>
-                            <select id='scalarY' onChange={changeScalarY}>
-                                <option value="FA">FA</option>
-                                <option value="MD">RD</option>
-                                <option value="RD">AD</option>
-                                <option value="AD">MD</option>
-                            </select>
-                        </div>
-
-                        <div className='select-group'>
-                            <label>Scalar X: </label>
-                            <select id='scalarX' onChange={changeScalarX}>
-                                <option value="FA">FA</option>
-                                <option value="MD">RD</option>
-                                <option value="RD">AD</option>
-                                <option value="AD">MD</option>
-                            </select>
-                        </div>
-
-                    </div>
-
-                </div>
-
             </div>
+
 
         </div>
     )

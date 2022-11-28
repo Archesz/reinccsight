@@ -5,7 +5,7 @@
     box-sizing: border-box;
     padding: 20px 30px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     overflow-x: scroll;
 
     .tables-area{
@@ -49,6 +49,25 @@
             }
         }
     }
+
+    .painel-call{
+        position: fixed;
+        right: 40px;
+        font-size: 26px;
+        height: 45px;
+        width: 45px;
+        z-index: 99;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background-color: rgb(130, 197, 199);
+        color: #3a3a3a;
+        font-weight: bolder;
+        box-shadow: 4px 4px 6px black;
+        cursor: pointer;
+    }
+
 }
 
 .options-row{

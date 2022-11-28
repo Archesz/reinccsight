@@ -1,18 +1,18 @@
 #painel-container{
-    width: 340px;
-    height: 700px;
-    border: 1px solid rgba(128, 128, 128, 0.40);
-    border-radius: 10px;
-    box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.25);
-    background-color: #eeeeee;
+    width: 380px;
+    height: 800px;
+    background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 99;
     top: 20px;
+    margin-right: 50px; 
+    border-right: 1px solid rgba(128, 128, 128);
 
     .painel-header{
         height: 20%;
+        width: 100%;
         border-bottom: 1px solid rgba(128, 128, 128);
         display: flex;
         flex-direction: column;

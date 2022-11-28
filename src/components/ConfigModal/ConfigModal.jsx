@@ -30,7 +30,7 @@ function ConfigModal(props) {
 
                             <div className='input-group'>
 
-                                <label>Gráfico</label>
+                                <label>Type of Graph</label>
                                 <select>
                                     {graphs.map((graph) => {
                                         return(
@@ -39,6 +39,11 @@ function ConfigModal(props) {
                                     })}
                                 </select>
 
+                            </div>
+
+                            <div className='input-group'>
+                                <label>Name</label>
+                                <input type="text"/>
                             </div>
 
                             <button className='btn-apply'>Apply and Save</button>

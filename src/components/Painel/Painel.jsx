@@ -22,7 +22,9 @@ function Painel(props) {
 
     function closePainel(){
         let painel = document.querySelector("#painel-container")
+        let call = document.querySelector("#painel-call")
         painel.style.display = "None"
+        call.style.display = "flex"
     }
 
     return (
