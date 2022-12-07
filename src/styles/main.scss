@@ -104,7 +104,7 @@
             border: 1px solid white;
             border-radius: 12px;    
             margin-left: 240px;
-            margin-top: 520px;
+            margin-top: 630px;
 
             div{
                 display: flex;
@@ -137,4 +137,38 @@
             border-radius: 50%;
         }
     }
+}
+
+/* Graphs */
+
+.area-view{
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 20px;
+    
+    .area-table{
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .area-boxplot{
+        margin-top: 60px;
+        margin-left: 40px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .area-midline{
+        box-sizing: border-box;
+        padding-top: 30px;
+        margin-left: 40px;
+        border-top: 1px solid #aeaeae;
+        display: flex;
+        flex-direction: row;
+    }
+
 }
