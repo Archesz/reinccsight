@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import Plot from 'react-plotly.js'
+import InfoTool from '../../components/InfoTool/InfoTool'
 import './TableSegmentation.scss'
 
 function getMeanValues(subjects, method, scalar){
@@ -32,7 +33,7 @@ function TableSegmentation(props) {
         headers = ["Method", "FA", "MD", "RD", "AD"]
     }
 
-    let cols = [["ROQS", "Watershed"]]
+    let cols = [["ROQS", "Watershed", "Joany"]]
 
     for(let i = 1; i != headers.length; i++){
         let v1 = getMeanValues(subjects, "ROQS_scalar", headers[i])
@@ -60,14 +61,14 @@ function TableSegmentation(props) {
         }
     }]
 
-    let layout = {width: "50%", height: 130, margin: {t: 10, b: 10, l: 10, r: 10}}
+    let layout = {width: "50%", height: 130, margin: {t: 10, b: 0, l: 10, r: 10}}
 
     return(
 
         <div className='table-field'>
                 
             <div className='table-row'>
-                <span className='table-title'>Segmentation Data</span>
+                <span className='table-title'>Segmentation Data <InfoTool text="Comparison of the mean values ​​obtained by segmentation in each method."/></span>
                 <button className='btn-export'>Export</button>
             </div>
 

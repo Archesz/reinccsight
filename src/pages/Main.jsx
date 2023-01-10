@@ -3,6 +3,11 @@ import React, {useState} from 'react'
 /* Data */
 import subjects from '../data/mydata.json'
 
+/* Imagens */
+import logo from '../assets/images/inccsight.png'
+import unicamp from '../assets/images/unicamp.png'
+import miclab from '../assets/images/miclab.png'
+
 /* Componentes */
 import SubjectCard from '../components/SubjectCard/SubjectCard'
 import ConfigModal from '../components/ConfigModal/ConfigModal'
@@ -12,12 +17,14 @@ import BoxplotSegmentation from '../graphs/Boxplot/BoxplotSegmentation'
 import BoxplotParcellation from '../graphs/Boxplot/BoxplotParcellation'
 import Scatter from '../graphs/Scatter/Scatter'
 import Midline from '../graphs/Line/Midline'
+
 /* Icones */
 import {BsGear} from 'react-icons/bs'
 import { createRoot } from 'react-dom/client';
 
 import '../styles/main.scss'
 import Radar from '../graphs/Radar/Radar'
+import Painel from '../components/Painel/Painel'
 
 function showConfigs(){
     const container = document.querySelector('#modalArea');
@@ -52,7 +59,7 @@ function Main() {
 
     return (
         <div className='container'>
-
+            
             <div id="modalArea">
             </div>
 
@@ -60,7 +67,12 @@ function Main() {
 
                 <div className='banner'>   
 
-                    <div className='img-logo'></div>
+                    <div className='banner-logos'>
+                        <img src={unicamp} alt="" className='banner-logo'/>
+                        <img src={miclab} alt="" className='banner-logo'/>
+                    </div>
+
+                    <img src={logo} className="img-logo"/>
 
                     <span className='banner-span'>This is data exploration and visualization tool for diffusion tensor images of the corpus callosum. Upload data folders to begin. Further information can be found here.</span>
 
@@ -84,7 +96,7 @@ function Main() {
 
                     </div>
 
-                    <button className='btn-check'>Check Quality [0]</button>
+                    <button className='btn-check'>Check Quality <span className='btn-tag'>0</span></button>
 
                 </div>
 

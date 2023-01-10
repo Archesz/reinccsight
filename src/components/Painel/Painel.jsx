@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import SubjectImage from '../../graphs/SubjectImage/SubjectImage'
 import './Painel.scss'
 
 function Painel(props) {
@@ -61,11 +60,7 @@ function Painel(props) {
 
             <div className='painel-body'>
 
-                {props.subjects[method].map((subject) => {
-                    return(
-                        <SubjectImage name={subject} method={method}/>
-                    )
-                })}
+
 
             </div>
 

@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import Plot from 'react-plotly.js'
 import './TableParcellation.scss'
 
+import InfoTool from '../../components/InfoTool/InfoTool'
+
 function getMeanValues(subjects, method, parc_method, scalar, part){
     let name = `${parc_method}_${scalar}_${part}`
     let value = 0
@@ -33,7 +35,7 @@ function TableParcellation(props) {
     let headers = ["Method", "P1", "P2", "P3", "P4", "P5"]
     let subjects = props.data
 
-    let cols = [["ROQS", "Watershed"]]
+    let cols = [["ROQS", "Watershed", "Joany"]]
 
     for(let i = 1; i != headers.length; i++){
         let v1 = getMeanValues(subjects, "ROQS_parcellation", methodParcellation, scalar, headers[i])
@@ -66,7 +68,7 @@ function TableParcellation(props) {
         <div className='table-field'>
                 
             <div className='table-row'>
-                <span className='table-title'>Parcellation</span>
+                <span className='table-title'>Parcellation Data <InfoTool text="Comparison of the average of the values ​​obtained from each part by the installment in each method."/></span>
                 <button className='btn-export'>Export</button>
             </div>
 
